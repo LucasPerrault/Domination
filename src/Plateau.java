@@ -7,4 +7,12 @@ public class Plateau {
 		this.longueur = longueurInit;
 		this.nbMaxDomino = nbMaxDominoInit;
 	}
+	
+	/**
+	 * Permet de choisir le nombre de Domino durant la partie
+	 * @param nbDomino
+	 */
+	private void setNbMaxDomino(double nbDomino) {
+		this.nbMaxDomino = nbDomino;
+	}
 }
