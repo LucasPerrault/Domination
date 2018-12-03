@@ -59,5 +59,12 @@ public class Dominos {
 		Type2 = type2;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 }
 	
