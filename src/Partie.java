@@ -1,5 +1,7 @@
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -15,29 +17,24 @@ public class Partie {
 	}
 	
 	private void initPartie(Map<String, String> couleurParJoueur) {
-		afficheDico(couleurParJoueur);
-		
-	}
-	
-	/**
-	 * Afficher un dictionnaire
-	 * @param map
-	 */
-	public static void afficheDico(Map map) {
-		Set <Entry>setMap = map.entrySet();
-		Iterator <Entry>iter = setMap.iterator();
-		while(iter.hasNext()) {
-			Entry displayMap = iter.next();
-			System.out.println(displayMap.getKey() + ":" + displayMap.getValue());
-		}
+		// PARTIE CAMELIA
 	}
 	
 	private void piocherDomino() {
-		
+		// PARTIE AUGUSTIN
 	}
 	
-	private void trierDomino() {
-		
+	/**
+	 * Cette fonction permet 
+	 */
+	private static void trierDomino() {
+		if(liste.isEmpty()) {
+			System.out.println("Il faut une liste non vide");
+			return;
+		}
+		List<Integer> sousListe = liste.subList(0, liste.size());
+		Collections.sort(liste); 
+		System.out.println(liste);
 	}
 	
 	private void placementDomino() {
