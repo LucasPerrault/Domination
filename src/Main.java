@@ -1,13 +1,26 @@
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.Map.Entry;
 
-// Première partie
+import edu.princeton.cs.introcs.StdDraw;
+
+
 public class Main {
+	
 	public static void main(String[] args) {
-		System.out.println("Helmonde");
-		// Ajout du scanner pour rentrer son prenom
-		Scanner scan = new Scanner(System.in);
-		String test = scan.nextLine();
-		System.out.println("Comment ça va " + test + "?");
+		
+		String[] tableName = {"Lucas", "Augustin"};
+		Map<String, String> couleurParJoueur = new HashMap<String, String>();
+		couleurParJoueur.put("Lucas", "Rouge");
+		couleurParJoueur.put("Jean-Pierre", "Noir");
+		couleurParJoueur.put("Augustin", "Vert");
+		couleurParJoueur.put("Camélia", "Rouge");
+		
+		Partie partie = new Partie(0, couleurParJoueur.size(), couleurParJoueur);
+		
 	}
 }
 
