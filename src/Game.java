@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Game {
@@ -44,6 +45,21 @@ public class Game {
 		//
 	}
 	
+	/**
+	 * Fonction permettant de supprimer un nombre de dominos en fonction du nombre de joueur.
+	 * @param nbDeJoueur
+	 * @return nbToDelete
+	 */
+	public static int nbDominosToDelete(int nbOfPlayer) {
+		int nbToDelete = 0;
+		if (nbOfPlayer == 2) {
+			nbToDelete = 24;
+		} else if (nbOfPlayer == 3) {
+			nbToDelete = 12;
+		}
+		return nbToDelete;
+	}
+	
 	/*
 	 * Définit les actions durant le premier tour de jeu 
 	 */
@@ -61,16 +77,9 @@ public class Game {
 	/*
 	 * Trie les dominos dans l'ordre croissant 
 	 */
-	public void sortDomino(List<Domino> liste) {
-//		if(liste.isEmpty()) {
-//			System.out.println("Liste de DOMINO vide");
-//			return;
-//		} else {
-//			Collections.sort(liste);
-//			for(int i=0; i< liste.size(); i++) {
-//				liste.get(i);
-//			}
-//		}
+	public List<Domino> sortDomino(List<Domino> liste) {
+		Collections.sort(liste, Comparator.comparingInt(Domino::getNumeroDomino));
+		return liste;
 	}
 	
 	/*

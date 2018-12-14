@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Stream;
 
 public class Deck {
@@ -37,15 +38,30 @@ public class Deck {
 	 * Permet de distribuer un certain nombre de carte.
 	 * @return listDistribuatedDomino
 	 */
-	public void distributeDomino(int number) {
-		//
+	public ArrayList<Domino> distributeDomino(int number) {
+		ArrayList<Domino> distributeListDomino = new ArrayList<Domino>();
+		Random numberRandom = new Random();
+		for (int i = 0; i < number; i++) {
+			int j = numberRandom.nextInt(this.listDominos.size());
+			distributeListDomino.add(this.listDominos.get(j));
+			System.out.println("Les dominos renvoy�es sont:" + distributeListDomino.get(j));
+		}
+		System.out.println("Les dominos sont: " + distributeListDomino);
+		
+		return distributeListDomino;
 	}
 	
 	/*
 	 * Permet d'enlever les Dominos déjà distribués 
 	 */
-	public void removeDomino() {
-		//
+	public void removeDomino(List<Domino> listeDesDominos, int nbDominosToDelete) {
+		Random nombreAleatoire = new Random();
+
+		for (int i = 0; i < nbDominosToDelete; i++) {
+			int j = nombreAleatoire.nextInt(listeDesDominos.size());
+			listeDesDominos.remove(j);
+			
+		}
 	}
 
 }
