@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
@@ -25,7 +26,9 @@ public class Deck {
 				String typeRight 		= tableLine[3];
 				int numero		 		= Integer.parseInt(tableLine[4]);
 				
-				Domino domino = new Domino(nbCouronneLeft, nbCouronneRight, numero, typeLeft, typeRight);
+				Tuile tuileLeft = new Tuile(typeLeft, nbCouronneLeft);
+				Tuile tuileRight = new Tuile(typeRight, nbCouronneRight);
+				Domino domino = new Domino(numero, tuileLeft, tuileRight);
 				listDominos.add(domino);
 			});
 			
@@ -36,7 +39,7 @@ public class Deck {
 	
 	/*
 	 * Permet de distribuer un certain nombre de carte.
-	 * @return listDistribuatedDomino
+	 * @return distributeListDomino
 	 */
 	public ArrayList<Domino> distributeDomino(int number) {
 		ArrayList<Domino> distributeListDomino = new ArrayList<Domino>();
@@ -44,24 +47,44 @@ public class Deck {
 		for (int i = 0; i < number; i++) {
 			int j = numberRandom.nextInt(this.listDominos.size());
 			distributeListDomino.add(this.listDominos.get(j));
-			System.out.println("Les dominos renvoy�es sont:" + distributeListDomino.get(j));
+			this.removeSpecificDomino(this.listDominos.get(j).getNumeroDomino());
 		}
-		System.out.println("Les dominos sont: " + distributeListDomino);
-		
 		return distributeListDomino;
 	}
 	
 	/*
 	 * Permet d'enlever les Dominos déjà distribués 
 	 */
-	public void removeDomino(List<Domino> listeDesDominos, int nbDominosToDelete) {
+	public void removeRandomDomino(int nbDominosToDelete) {
 		Random nombreAleatoire = new Random();
 
 		for (int i = 0; i < nbDominosToDelete; i++) {
-			int j = nombreAleatoire.nextInt(listeDesDominos.size());
-			listeDesDominos.remove(j);
-			
+			int j = nombreAleatoire.nextInt(this.listDominos.size());
+			this.listDominos.remove(j);
 		}
+	}
+	
+	/**
+	 * Supprimer un domino en fonction de son numéro
+	 * @param numeroDomino
+	 */
+	public void removeSpecificDomino(int numeroDomino) {
+		Iterator<Domino> iterator = this.listDominos.iterator();
+		while (iterator.hasNext()) {
+			Domino domino = iterator.next(); // On récupère l'élément courant
+			if(numeroDomino == domino.getNumeroDomino()) {
+				iterator.remove();
+				System.out.println("Nous avons supprimé le domino " + domino.getNumeroDomino() );
+			}
+		}
+	}
+	
+	/**
+	 * Retourne le nombre de domino disponible dans le deck
+	 * @return
+	 */
+	public int getNumberOfDomino() {
+		return this.listDominos.size();
 	}
 
 }
