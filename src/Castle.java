@@ -10,10 +10,10 @@ public class Castle {
 	 * @param positionX
 	 * @param positionY
 	 */
-	public Castle(String name, int positionX, int positionY) {
+	public Castle(String name, int positionXInit, int positionYInit) {
 		this.name = name;
-		this.positionX = positionX;
-		this.positionY = positionY;
+		this.positionX = positionXInit;
+		this.positionY = positionYInit;
 	}
 
 }
