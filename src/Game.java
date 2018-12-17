@@ -77,7 +77,7 @@ public class Game {
 	/*
 	 * Trie les dominos dans l'ordre croissant 
 	 */
-	public List<Domino> sortDomino(List<Domino> liste) {
+	public ArrayList<Domino> sortDomino(ArrayList<Domino> liste) {
 		Collections.sort(liste, Comparator.comparingInt(Domino::getNumeroDomino));
 		return liste;
 	}
