@@ -21,7 +21,7 @@ public class Domino {
 	@Override
 	public String toString() {
 		return 	"Le domino est le numéro " + 
-				this.numero + "ayant comme tuile: " + 
+				this.numero + " ayant " + 
 				this.tuileLeft.toString() + 
 				"et" + this.tuileRight.toString();
 	}

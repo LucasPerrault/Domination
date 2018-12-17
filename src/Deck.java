@@ -3,13 +3,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
 public class Deck {
 	
-	ArrayList<Domino> listDominos;
+	ArrayList<Domino> listDominos = new ArrayList<Domino>();
 	
 	public Deck() {
 		String pathCSVDominos = "../DOMINATION/CSV/dominos.csv";
@@ -74,7 +73,6 @@ public class Deck {
 			Domino domino = iterator.next(); // On récupère l'élément courant
 			if(numeroDomino == domino.getNumeroDomino()) {
 				iterator.remove();
-				System.out.println("Nous avons supprimé le domino " + domino.getNumeroDomino() );
 			}
 		}
 	}

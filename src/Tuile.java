@@ -14,7 +14,7 @@ public class Tuile {
 	
 	@Override
 	public String toString() {
-		return "Cette tuile est de type" + this.type + "et contient " + this.nbCouronne + "\n";
+		return " une tuile de type " + this.type + " et contient " + this.nbCouronne + " couronne(s)\n";
 	}
 	
 	/*
@@ -57,6 +57,10 @@ public class Tuile {
 		this.positionX = positionX;
 	}
 	
+	/**
+	 * Définit une nouvelle position y
+	 * @param positionY
+	 */
 	public void setPositionY(int positionY) {
 		this.positionY = positionY;
 	}

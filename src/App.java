@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+
+
 /*
  *  Projet: Domination
  *  
@@ -13,6 +17,14 @@
 public class App {
 	
 	public static void main(String[] args) {
+		Deck deck = new Deck();
+		ArrayList<Domino> listDomino = new ArrayList();
+		listDomino = deck.distributeDomino(4);
+		Iterator<Domino> iterator = listDomino.iterator();
+		while(iterator.hasNext()) {
+			Domino domino = iterator.next(); // On récupère l'élément courant
+			System.out.println(domino.toString());
+		}
 		
 	}
 
