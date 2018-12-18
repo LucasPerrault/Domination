@@ -28,8 +28,8 @@ public class Game {
 					Deck deck = new Deck();
 					int numberOfPlayers = this.setNumberOfPlayers();
 					this.setPlayers(numberOfPlayers);
-					this.setCastle(numberOfPlayers);
-					this.setKingsPerPlayer(numberOfPlayers);
+					this.setCastle();
+					this.setKingsPerPlayer();
 					this.deleteInitDomino(numberOfPlayers, deck);
 				break;
 			}
@@ -153,7 +153,7 @@ public class Game {
 	/*
 	 * Définit les rois de chaque joueur.
 	 */
-	public void setKingsPerPlayer(int numberOfPlayers) {
+	public void setKingsPerPlayer() {
 		String colorKing;
 		boolean isSelectColorNotExist;
 		Iterator<Player> iterator = this.listOfPlayers.iterator();
@@ -165,6 +165,7 @@ public class Game {
 				// Il doit choisir deux rois, donc boucle de deux
 				for(int i=1; i < this.listOfPlayers.size()+1; i++) {
 					do {
+						System.out.println("Sélection du roi \n");
 						colorKing = this.getListOfPosibilityColor(player);
 						isSelectColorNotExist = checkColorIsSelected(colorKing);
 					} while(!isSelectColorNotExist);
@@ -173,6 +174,7 @@ public class Game {
 				}
 			} else {
 				do {
+					System.out.println("Sélection du roi \n");
 					colorKing = this.getListOfPosibilityColor(player);
 					isSelectColorNotExist = checkColorIsSelected(colorKing);
 				} while(!isSelectColorNotExist);
@@ -185,8 +187,22 @@ public class Game {
 	/*
 	 * Définit les chateaux de chaque joueur
 	 */
-	public void setCastle(int numberOfPlayers) {
-		//
+	public void setCastle() {
+		String colorCastle;
+		boolean isSelectColorNotExist;
+		Iterator<Player> iterator = this.listOfPlayers.iterator();
+		// On parcourt la liste des joueurs du jeu.
+		while(iterator.hasNext()) {
+			Player player = iterator.next();
+			// S'il y a deux joueurs
+			do {
+				System.out.println("Sélection du chateau \n");
+				colorCastle = this.getListOfPosibilityColor(player);
+				isSelectColorNotExist = checkColorIsSelected(colorCastle);
+			} while(!isSelectColorNotExist);
+			Castle castle = new Castle(colorCastle);
+			player.listCastle.add(castle);
+		}
 	}
 	
 	/**

@@ -1,7 +1,7 @@
 
 public class Castle {
 	
-	String name;
+	String color;
 	int positionX, positionY;
 	
 	/*
@@ -10,10 +10,8 @@ public class Castle {
 	 * @param positionX
 	 * @param positionY
 	 */
-	public Castle(String name, int positionXInit, int positionYInit) {
-		this.name = name;
-		this.positionX = positionXInit;
-		this.positionY = positionYInit;
+	public Castle(String colorInit) {
+		this.color = colorInit;
 	}
 
 }
