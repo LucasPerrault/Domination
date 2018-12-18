@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,7 +13,6 @@ public class Game {
 	 * Constructeur de la classe 
 	 */
 	public Game() {
-		this.toString();
 	}
 	
 	/*
@@ -28,6 +28,7 @@ public class Game {
 					Deck deck = new Deck();
 					int numberOfPlayers = this.setNumberOfPlayers();
 					this.setPlayers(numberOfPlayers);
+					this.setCastle(numberOfPlayers);
 					this.setKingsPerPlayer(numberOfPlayers);
 					this.deleteInitDomino(numberOfPlayers, deck);
 				break;
@@ -82,7 +83,7 @@ public class Game {
 		Scanner scan = new Scanner(System.in);
 		for(int i=0; i < numberOfPlayers; i++) {
 			try {
-				System.out.println("Saisissez le nombre du joueur n°" + i +  ": \n");
+				System.out.println("Saisissez le pseudo du joueur n°" + i +  ": \n");
 				nameOfPlayer = scan.next();
 				Player player = new Player(nameOfPlayer);
 				this.listOfPlayers.add(player);
@@ -93,35 +94,90 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * Affiche un menu de possibilité de couleur pour les rois et chateaux
+	 * @param player
+	 * @return color
+	 */
+	public String getListOfPosibilityColor(Player player) {
+		String color;
+		int response = 0;
+		Scanner scan = new Scanner(System.in);
+		// Le joueur choisit une couleur imposée
+		System.out.println(player.getName() + " choisissez votre couleur avec le chiffre correspondant: \n");
+		do {
+			try {
+				System.out.println("0. Rouge \n" + "1. Bleu \n" + "2. Vert \n" + "3. Jaune \n");
+				response = scan.nextInt();
+			} catch(Exception e) {
+				System.out.println("ATTENTION, selectionnez le 0, 1, 2 ou 3");
+			}
+			
+		} while (false || response != 0 && response !=1 && response != 2 && response != 3 );
+		
+		switch (response) {
+			case 0:
+				return "Rouge";
+			case 1:
+				return "Bleu";
+			case 2:
+				return "Vert";
+			case 3:
+				return "Jaune";
+			default:
+				return "Erreur veuillez réessayer..";
+		}
+	}
+	
+	/**
+	 * Regarde les couleurs déjà choisie par nos joueurs pour les rois et chateaux
+	 * @param color
+	 * @return boolean
+	 */
+	public boolean checkColorIsSelected(String color) {
+		Iterator<Player> iteratorPlayer = this.listOfPlayers.iterator();
+		while(iteratorPlayer.hasNext()) {
+			Player player = iteratorPlayer.next();
+			Iterator<King> iteratorKing = player.listKings.iterator();
+			while(iteratorKing.hasNext()) {
+				King king= iteratorKing.next();
+				if(color.equals(king.getColor())){
+					System.out.println("Cette couleur est déjà choisie ! \n");
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	/*
 	 * Définit les rois de chaque joueur.
 	 */
 	public void setKingsPerPlayer(int numberOfPlayers) {
-		String color;
-		Scanner scan = new Scanner(System.in);
-		if(numberOfPlayers == 2) {
-			for(int i=1; i < numberOfPlayers+1; i++) {
-				try {
-					for(int j=0; j < 2; j++) {
-						System.out.println("Joueur n°"+ i +", quelle couleur voulez-vous ? \n");
-						color = scan.next();
-						King king = new King(color);
-					}
-				} catch(Exception e) {
-					System.out.println("ATTENTION, choisissez bien une couleur !");
-					scan.nextLine();
+		String colorKing;
+		boolean isSelectColorNotExist;
+		Iterator<Player> iterator = this.listOfPlayers.iterator();
+		// On parcourt la liste des joueurs du jeu.
+		while(iterator.hasNext()) {
+			Player player = iterator.next();
+			// S'il y a deux joueurs
+			if(this.listOfPlayers.size() == 2) {
+				// Il doit choisir deux rois, donc boucle de deux
+				for(int i=1; i < this.listOfPlayers.size()+1; i++) {
+					do {
+						colorKing = this.getListOfPosibilityColor(player);
+						isSelectColorNotExist = checkColorIsSelected(colorKing);
+					} while(!isSelectColorNotExist);
+					King king = new King(colorKing);
+					player.listKings.add(king);
 				}
-			}
-		} else {
-			for(int i=1; i < numberOfPlayers+1; i++) {
-				try {
-					System.out.println("Joueur n°"+ i +", quelle couleur voulez-vous ? \n");
-					color = scan.next();
-					King king = new King(color);
-				} catch(Exception e) {
-					System.out.println("ATTENTION, choisissez bien une couleur !");
-					scan.nextLine();
-				}
+			} else {
+				do {
+					colorKing = this.getListOfPosibilityColor(player);
+					isSelectColorNotExist = checkColorIsSelected(colorKing);
+				} while(!isSelectColorNotExist);
+				King king = new King(colorKing);
+				player.listKings.add(king);
 			}
 		}
 	}
@@ -129,7 +185,7 @@ public class Game {
 	/*
 	 * Définit les chateaux de chaque joueur
 	 */
-	public void setCastle() {
+	public void setCastle(int numberOfPlayers) {
 		//
 	}
 	
