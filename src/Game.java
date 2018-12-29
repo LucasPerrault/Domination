@@ -24,7 +24,7 @@ public class Game {
 			value = menu();
 			switch (value) {
 				case 0:
-					System.out.println("Début de la partie !");
+					System.out.println("Debut de la partie !");
 					Deck deck = new Deck();
 					int numberOfPlayers = this.setNumberOfPlayers();
 					this.setPlayers(numberOfPlayers);
@@ -34,11 +34,11 @@ public class Game {
 				break;
 			}
 		} while(value !=1);
-		System.out.println("Vous avez décider de quittez l'application !");		
+		System.out.println("Vous avez decider de quittez l'application !");		
 	}
 	
 	/**
-	 * Affichage du menu de sélection d'action
+	 * Affichage du menu de selection d'action
 	 * @return 0 ou 1
 	 */
 	public int menu() {
@@ -57,7 +57,7 @@ public class Game {
 	}
 	
 	/**
-	 * Détermine le nombre de joueur voulant jouer
+	 * Determine le nombre de joueur voulant jouer
 	 * @return
 	 */
 	public int setNumberOfPlayers() {
@@ -68,7 +68,7 @@ public class Game {
 				System.out.println("Saisissez le nombre de joueur: 2/3/4 \n");
 				nbOfPlayers = scan.nextInt();
 			} catch(Exception e) {
-				System.out.println("ATTENTION, seulement 2, 3 ou 4 joueurs sont autorisés à jouer");
+				System.out.println("ATTENTION, seulement 2, 3 ou 4 joueurs sont autorises a jouer");
 				scan.nextLine();
 			}
 		} while (false  || nbOfPlayers !=2 && nbOfPlayers !=3 && nbOfPlayers !=4);
@@ -76,26 +76,26 @@ public class Game {
 	}
 	
 	/*
-	 * Créer l'objet joueur en fonction du nombre de joueur. 
+	 * Creer l'objet joueur en fonction du nombre de joueur. 
 	 */
 	public void setPlayers(int numberOfPlayers) {
 		String nameOfPlayer;
 		Scanner scan = new Scanner(System.in);
-		for(int i=0; i < numberOfPlayers; i++) {
+		for(int i=1; i <= numberOfPlayers; i++) {
 			try {
-				System.out.println("Saisissez le pseudo du joueur n°" + i +  ": \n");
+				System.out.println("Saisissez le pseudo du joueur n�" + i +  ": \n");
 				nameOfPlayer = scan.next();
 				Player player = new Player(nameOfPlayer);
 				this.listOfPlayers.add(player);
 			} catch(Exception e) {
-				System.out.println("ATTENTION, saisissez bien le prénom du joueur !");
+				System.out.println("ATTENTION, saisissez bien le prenom du joueur !");
 				scan.nextLine();
 			}
 		}
 	}
 	
 	/**
-	 * Affiche un menu de possibilité de couleur pour les rois et chateaux
+	 * Affiche un menu de possibilite de couleur pour les rois et chateaux
 	 * @param player
 	 * @return color
 	 */
@@ -103,34 +103,34 @@ public class Game {
 		String color;
 		int response = 0;
 		Scanner scan = new Scanner(System.in);
-		// Le joueur choisit une couleur imposée
+		// Le joueur choisit une couleur impos�e
 		System.out.println(player.getName() + " choisissez votre couleur avec le chiffre correspondant: \n");
 		do {
 			try {
-				System.out.println("0. Rouge \n" + "1. Bleu \n" + "2. Vert \n" + "3. Jaune \n");
+				System.out.println("1. Rouge \n" + "2. Bleu \n" + "3. Vert \n" + "4. Jaune \n");
 				response = scan.nextInt();
 			} catch(Exception e) {
-				System.out.println("ATTENTION, selectionnez le 0, 1, 2 ou 3");
+				System.out.println("ATTENTION, selectionnez le 1, 2, 3 ou 4");
 			}
 			
-		} while (false || response != 0 && response !=1 && response != 2 && response != 3 );
+		} while (false || response != 1 && response !=2 && response != 3 && response != 4 );
 		
 		switch (response) {
-			case 0:
-				return "Rouge";
 			case 1:
-				return "Bleu";
+				return "Rouge";
 			case 2:
-				return "Vert";
+				return "Bleu";
 			case 3:
+				return "Vert";
+			case 4:
 				return "Jaune";
 			default:
-				return "Erreur veuillez réessayer..";
+				return "Erreur veuillez reessayer..";
 		}
 	}
 	
 	/**
-	 * Regarde les couleurs déjà choisie par nos joueurs pour les rois et chateaux
+	 * Regarde les couleurs deja� choisie par nos joueurs pour les rois et chateaux
 	 * @param color
 	 * @return boolean
 	 */
@@ -142,7 +142,7 @@ public class Game {
 			while(iteratorKing.hasNext()) {
 				King king= iteratorKing.next();
 				if(color.equals(king.getColor())){
-					System.out.println("Cette couleur est déjà choisie ! \n");
+					System.out.println("Cette couleur est deja� choisie ! \n");
 					return false;
 				}
 			}
@@ -151,7 +151,7 @@ public class Game {
 	}
 	
 	/*
-	 * Définit les rois de chaque joueur.
+	 * Definit les rois de chaque joueur.
 	 */
 	public void setKingsPerPlayer() {
 		String colorKing;
@@ -165,7 +165,7 @@ public class Game {
 				// Il doit choisir deux rois, donc boucle de deux
 				for(int i=1; i < this.listOfPlayers.size()+1; i++) {
 					do {
-						System.out.println("Sélection du roi \n");
+						System.out.println("Selection du roi \n");
 						colorKing = this.getListOfPosibilityColor(player);
 						isSelectColorNotExist = checkColorIsSelected(colorKing);
 					} while(!isSelectColorNotExist);
@@ -174,7 +174,7 @@ public class Game {
 				}
 			} else {
 				do {
-					System.out.println("Sélection du roi \n");
+					System.out.println("Selection du roi \n");
 					colorKing = this.getListOfPosibilityColor(player);
 					isSelectColorNotExist = checkColorIsSelected(colorKing);
 				} while(!isSelectColorNotExist);
@@ -196,7 +196,7 @@ public class Game {
 			Player player = iterator.next();
 			// S'il y a deux joueurs
 			do {
-				System.out.println("Sélection du chateau \n");
+				System.out.println("Selection du chateau \n");
 				colorCastle = this.getListOfPosibilityColor(player);
 				isSelectColorNotExist = checkColorIsSelected(colorCastle);
 			} while(!isSelectColorNotExist);
