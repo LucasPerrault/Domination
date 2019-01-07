@@ -13,7 +13,6 @@ import model.Domino;
 import model.Gameboard;
 import model.King;
 import model.Player;
-import vue.DeckView;
 import vue.Window;
 
 public class Game {
@@ -30,8 +29,10 @@ public class Game {
 	/*
 	 * Initialisation de la partie
 	 */
-	public void init(int value ) {
+	public void init() {
+		int value = 0;
 		do {
+			value = menu();
 			switch (value) {
 				case 0:
 					System.out.println("Debut de la partie !");					

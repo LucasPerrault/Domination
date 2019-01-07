@@ -17,7 +17,9 @@ import vue.Window;
 public class App {
 	
 	public static void main(String[] args) {
-		Window window = new Window(1000,1000, new Game());
+		Game game = new Game();
+		game.init();
+//		Window window = new Window(1000,1000, new Game());
 	}
 
 }

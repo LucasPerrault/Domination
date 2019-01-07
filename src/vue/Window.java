@@ -107,11 +107,11 @@ public class Window extends JFrame implements ActionListener {
 	    Object source = event.getSource();
 	
 	    if (source == exit) {
-	    	int value = 0;
+	    	int value = 1;
 	        this.gameBoard.init(value);
 	    	System.exit(0);
 	    } else if (source == play) {
-	        int value = 1;
+	        int value = 0;
 	    	layout.show(panel, "Game");
 	        this.gameBoard.init(value);
 	    } else if (source == regles){
