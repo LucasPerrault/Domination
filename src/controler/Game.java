@@ -30,16 +30,11 @@ public class Game {
 	/*
 	 * Initialisation de la partie
 	 */
-	public void init() {
-		int value =0;
+	public void init(int value ) {
 		do {
-			value = menu();
 			switch (value) {
 				case 0:
-					System.out.println("Debut de la partie !");
-					
-					Window window = new Window(1000,1000);
-					
+					System.out.println("Debut de la partie !");					
 					int numberOfPlayers = this.setNumberOfPlayers();
 					this.setPlayers(numberOfPlayers);
 //					this.setCastle();

@@ -1,5 +1,4 @@
 package vue;
-import javax.swing.JFrame;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,15 +7,17 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import controler.Game;
 
 public class Window extends JFrame implements ActionListener {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private int width, height;
-	
-	JButton play = new JButton("Jouer");
+    private int width, height;
+
+    JButton play = new JButton("Jouer");
 	JButton regles = new JButton("Regles");
 	JButton exit = new JButton("QUITTER");
 	JButton mainMenu = new JButton("Menu principal");
@@ -33,9 +34,13 @@ public class Window extends JFrame implements ActionListener {
 	JPanel rules = new JPanel(); 
 	JPanel two = new JPanel(); 
 	JPanel three = new JPanel(); 
-	JPanel four = new JPanel(); 
-
-	public Window(int width, int height) {
+	JPanel four = new JPanel();
+	
+	Game gameBoard = new Game();
+	
+	public Window(int width, int height, Game game) {
+		this.gameBoard = game;
+		
 	    this.width = width;
 	    this.height = height;
 	
@@ -51,9 +56,9 @@ public class Window extends JFrame implements ActionListener {
 	    requestFocus();
 	
 	}
-
+	
 	private void addButtons() {
-		
+	
 	    play.addActionListener(this);
 	    regles.addActionListener(this);
 	    exit.addActionListener(this);
@@ -96,15 +101,19 @@ public class Window extends JFrame implements ActionListener {
 	    layout.show(panel,"Menu");
 	
 	}
-
+	
 	public void actionPerformed(ActionEvent event) {
-
+	
 	    Object source = event.getSource();
 	
 	    if (source == exit) {
-	        System.exit(0);
+	    	int value = 0;
+	        this.gameBoard.init(value);
+	    	System.exit(0);
 	    } else if (source == play) {
-	        layout.show(panel, "Game");
+	        int value = 1;
+	    	layout.show(panel, "Game");
+	        this.gameBoard.init(value);
 	    } else if (source == regles){
 	        layout.show(panel, "Regles");
 	    } else if (source == mainMenu){
@@ -118,7 +127,7 @@ public class Window extends JFrame implements ActionListener {
 	    } else if (source == fourPlayers){
 	        layout.show(panel, "Four");
 	    }
-
-    }
+	
+	}
 
 }
