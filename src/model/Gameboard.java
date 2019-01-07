@@ -1,6 +1,7 @@
+package model;
 
 public class Gameboard {
-	 int width, height;
+	 public int width, height;
 	
 	/**
 	 * Constructeur du plateau de jeu

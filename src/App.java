@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.Iterator;
+import controler.Game;
+import vue.Window;
 
 
 /*
@@ -17,9 +17,10 @@ import java.util.Iterator;
 public class App {
 	
 	public static void main(String[] args) {
-		Game game = new Game();
-		game.init();
-		
+//		Game game = new Game();
+//		game.init();
+		Window window = new Window(1000,1000);
+
 	}
 
 }

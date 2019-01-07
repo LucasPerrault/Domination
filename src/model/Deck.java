@@ -1,3 +1,4 @@
+package model;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -5,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.stream.Stream;
+
+import model.Domino;
+import model.Tuile;
 
 public class Deck {
 	

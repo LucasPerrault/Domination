@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Une tuile représente la moitié d'un Domino. Elle est composée d'un nombre de couronne et d'un type
  */

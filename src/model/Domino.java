@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Un domino est composé de deux tuiles sur une face et d'un numéro sur l'autre face.
  */
