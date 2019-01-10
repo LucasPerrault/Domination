@@ -1,4 +1,7 @@
 package model;
+
+import java.util.Iterator;
+
 public class King {
 	
 	String color;
@@ -9,6 +12,11 @@ public class King {
 	 */
 	public King(String colorInit) {
 		this.color = colorInit;
+	}
+	
+	@Override
+	public String toString() {
+		return "La couleur du roi est " + this.color;
 	}
 	
 	/**

@@ -108,12 +108,12 @@ public class Window extends JFrame implements ActionListener {
 	
 	    if (source == exit) {
 	    	int value = 1;
-	        this.gameBoard.init(value);
+//	        this.gameBoard.init(value);
 	    	System.exit(0);
 	    } else if (source == play) {
 	        int value = 0;
 	    	layout.show(panel, "Game");
-	        this.gameBoard.init(value);
+//	        this.gameBoard.init(value);
 	    } else if (source == regles){
 	        layout.show(panel, "Regles");
 	    } else if (source == mainMenu){

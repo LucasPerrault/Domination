@@ -12,7 +12,7 @@ import model.Tuile;
 
 public class Deck {
 	
-	ArrayList<Domino> listDominos = new ArrayList<Domino>();
+	public ArrayList<Domino> listDominos = new ArrayList<Domino>();
 	
 	public Deck() {
 		String pathCSVDominos = "../DOMINATION/CSV/dominos.csv";
@@ -40,53 +40,15 @@ public class Deck {
 		}
 	}
 	
-	/*
-	 * Permet de distribuer un certain nombre de carte.
-	 * @return distributeListDomino
-	 */
-	public ArrayList<Domino> distributeDomino(int number) {
-		ArrayList<Domino> distributeListDomino = new ArrayList<Domino>();
-		Random numberRandom = new Random();
-		for (int i = 0; i < number; i++) {
-			int j = numberRandom.nextInt(this.listDominos.size());
-			distributeListDomino.add(this.listDominos.get(j));
-			this.removeSpecificDomino(this.listDominos.get(j).getNumeroDomino());
+	@Override
+	public String toString() {
+		String response = "Les dominos disponibles dans le Deck sont: ";
+		Iterator<Domino> dominos = this.listDominos.iterator();
+		while(dominos.hasNext()) {
+			Domino domino = dominos.next();
+			response.concat(domino.toString() + "\n");
 		}
-		return distributeListDomino;
-	}
-	
-	/*
-	 * Permet d'enlever les Dominos déjà distribués 
-	 */
-	public void removeRandomDomino(int nbDominosToDelete) {
-		Random nombreAleatoire = new Random();
-
-		for (int i = 0; i < nbDominosToDelete; i++) {
-			int j = nombreAleatoire.nextInt(this.listDominos.size());
-			this.listDominos.remove(j);
-		}
-	}
-	
-	/**
-	 * Supprimer un domino en fonction de son numéro
-	 * @param numeroDomino
-	 */
-	public void removeSpecificDomino(int numeroDomino) {
-		Iterator<Domino> iterator = this.listDominos.iterator();
-		while (iterator.hasNext()) {
-			Domino domino = iterator.next(); // On récupère l'élément courant
-			if(numeroDomino == domino.getNumeroDomino()) {
-				iterator.remove();
-			}
-		}
-	}
-	
-	/**
-	 * Retourne le nombre de domino disponible dans le deck
-	 * @return
-	 */
-	public int getNumberOfDomino() {
-		return this.listDominos.size();
+		return response;
 	}
 
 }
