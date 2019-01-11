@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Player {
 	
 	String name;
+	public boolean isIa;
 	public Gameboard gameboard;
 	public ArrayList<King> listKings = new ArrayList<King>();
 	public ArrayList<Castle> listCastle = new ArrayList<Castle>();
@@ -13,19 +14,17 @@ public class Player {
 	public ArrayList<Domino> listSelectDominos = new ArrayList<Domino>();
 
 	
-	public Player(String nameInit) {
+	public Player(String nameInit, boolean isIaInit) {
 		this.name = nameInit;
+		this.isIa = isIaInit;
 	}
 	
 	@Override
 	public String toString() {
-		String response = "Les dominos disponibles dans le Deck sont: ";
-		Iterator<Domino> dominos = this.listDominos.iterator();
-		while(dominos.hasNext()) {
-			Domino domino = dominos.next();
-			response.concat(domino.toString() + "\n");
-		}
-		return response;
+		return "Le joueur " + this.name +
+				" détient le chateau de couleur " + this.getCastles() +
+				". Il détient aussi les rois de couleur " + this.getKing() +
+				". Et actuellement, il détient les dominos " + this.getDominos();
 	}
 	
 	/**
@@ -56,7 +55,7 @@ public class Player {
 		Iterator<Domino> dominos = listDominos.iterator();
 		while(dominos.hasNext()) {
 			Domino domino= dominos.next();
-			dominoI.concat(castle.toString());
+			dominoI.concat(domino.toString());
 		}
 		return dominoI;
 	}
@@ -68,8 +67,8 @@ public class Player {
 		String kingI = "Les kings sont ";
 		Iterator<King> kings = listKings.iterator();
 		while(kings.hasNext()) {
-			King kign= kings.next();
-			kingI.concat(castle.toString());
+			King king= kings.next();
+			kingI.concat(king.toString());
 		}
 		return kingI;
 	}

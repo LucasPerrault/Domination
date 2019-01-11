@@ -2,6 +2,7 @@ package controler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
 
 import model.King;
@@ -27,7 +28,7 @@ public class KingCtrl {
 					
 					do {
 						colorKing = this.selectColor(player);
-						isSelectColorNotExist = checkColorIsSelected(colorKing, listOfPlayers);
+						isSelectColorNotExist = checkColorIsSelected(colorKing, listOfPlayers, player);
 					} while(!isSelectColorNotExist);
 					
 					King king = new King(colorKing);
@@ -36,9 +37,8 @@ public class KingCtrl {
 			} else {
 				
 				do {
-					System.out.println("Selection du roi \n");
 					colorKing = this.selectColor(player);
-					isSelectColorNotExist = checkColorIsSelected(colorKing, listOfPlayers);
+					isSelectColorNotExist = checkColorIsSelected(colorKing, listOfPlayers, player);
 				} while(!isSelectColorNotExist);
 				
 				King king = new King(colorKing);
@@ -53,18 +53,33 @@ public class KingCtrl {
 	 * @return
 	 */
 	public String selectColor(Player player) {
-		
-		switch (this.displayPossibilityColor(player)) {
-		case 1:
-			return "Rouge";
-		case 2:
-			return "Bleu";
-		case 3:
-			return "Vert";
-		case 4:
-			return "Jaune";
-		default:
-			return "Erreur veuillez reessayer..";
+		if(player.isIa) {
+			Random rand = new Random();
+			switch (rand.nextInt(3)+1) {
+			case 1:
+				return "Rouge";
+			case 2:
+				return "Bleu";
+			case 3:
+				return "Vert";
+			case 4:
+				return "Jaune";
+			default:
+				return "Erreur veuillez reessayer..";
+			}
+		} else {
+			switch (this.displayPossibilityColor(player)) {
+			case 1:
+				return "Rouge";
+			case 2:
+				return "Bleu";
+			case 3:
+				return "Vert";
+			case 4:
+				return "Jaune";
+			default:
+				return "Erreur veuillez reessayer..";
+			}
 		}
 	}
 	
@@ -96,7 +111,7 @@ public class KingCtrl {
 	 * @param color, player
 	 * @return boolean
 	 */
-	public boolean checkColorIsSelected(String color, ArrayList<Player> players) {
+	public boolean checkColorIsSelected(String color, ArrayList<Player> players, Player playerWhichPlay) {
 		Iterator<Player> iteratorPlayer = players.iterator();
 		
 		while(iteratorPlayer.hasNext()) {
@@ -106,10 +121,15 @@ public class KingCtrl {
 			while(iteratorKing.hasNext()) {
 				King king = iteratorKing.next();
 				if(color.equals(king.getColor())){
-					System.out.println("Cette couleur est deja� choisie ! \n");
+					if(!playerWhichPlay.isIa) {
+						System.out.println("WARNING: Cette couleur est deja� choisie ! \n");
+					}
 					return false;
 				}
 			}
+		}
+		if(playerWhichPlay.isIa) {
+			System.out.println(playerWhichPlay.getName() + " a choisi la couleur " + color + "\n");
 		}
 		return true;
 	}

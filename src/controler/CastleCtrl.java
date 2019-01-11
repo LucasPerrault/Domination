@@ -2,6 +2,7 @@ package controler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
 
 import model.Castle;
@@ -22,10 +23,10 @@ public class CastleCtrl {
 			System.out.println("INFORMATION : C'est à " + player.getName() + " de sélectionner son chateau: \n\n");
 			do {
 				colorCastle = this.selectColor(player);
-				isSelectColorNotExist = checkColorIsSelected(colorCastle, listOfPlayers);
+				isSelectColorNotExist = checkColorIsSelected(colorCastle, listOfPlayers, player);
 			} while(!isSelectColorNotExist);
 			
-			player.castle = new Castle(colorCastle);
+			player.listCastle.add(new Castle(colorCastle)); 
 		}
 	}
 	
@@ -35,18 +36,35 @@ public class CastleCtrl {
 	 * @return
 	 */
 	public String selectColor(Player player) {
-		
-		switch (this.displayPossibilityColor(player)) {
-		case 1:
-			return "Rouge";
-		case 2:
-			return "Bleu";
-		case 3:
-			return "Vert";
-		case 4:
-			return "Jaune";
-		default:
-			return "Erreur veuillez reessayer..";
+
+		if(player.isIa) {
+			Random rand = new Random();
+			int value = rand.nextInt(3) + 1;
+			switch (value) {
+			case 1:
+				return "Rouge";
+			case 2:
+				return "Bleu";
+			case 3:
+				return "Vert";
+			case 4:
+				return "Jaune";
+			default:
+				return "Erreur veuillez reessayer..";
+			}
+		} else {
+			switch (this.displayPossibilityColor(player)) {
+			case 1:
+				return "Rouge";
+			case 2:
+				return "Bleu";
+			case 3:
+				return "Vert";
+			case 4:
+				return "Jaune";
+			default:
+				return "Erreur veuillez reessayer..";
+			}
 		}
 	}
 	
@@ -57,6 +75,7 @@ public class CastleCtrl {
 	 */
 	public int displayPossibilityColor(Player player) {
 		int response = 0;
+	
 		Scanner scan = new Scanner(System.in);
 		// Le joueur choisit une couleur impos�e
 		System.out.println("INSTRUCTION: Choisissez la couleur du chateau désiré \navec le chiffre correspondant: \n");
@@ -78,7 +97,7 @@ public class CastleCtrl {
 	 * @param color, player
 	 * @return boolean
 	 */
-	public boolean checkColorIsSelected(String color, ArrayList<Player> players) {
+	public boolean checkColorIsSelected(String color, ArrayList<Player> players, Player playerWhichPlay) {
 		Iterator<Player> iteratorPlayer = players.iterator();
 		
 		while(iteratorPlayer.hasNext()) {
@@ -88,10 +107,15 @@ public class CastleCtrl {
 			while(iteratorCastle.hasNext()) {
 				Castle castle = iteratorCastle.next();
 				if(color.equals(castle.getColor())){
-					System.out.println("WARNING: Cette couleur est deja choisie ! \n");
+					if(!playerWhichPlay.isIa) {
+						System.out.println("WARNING: Cette couleur est deja choisie ! \n");
+					}
 					return false;
 				}
 			}
+		}
+		if(playerWhichPlay.isIa) {
+			System.out.println(playerWhichPlay.getName() + " a choisi la couleur " + color + "\n");
 		}
 		return true;
 	}

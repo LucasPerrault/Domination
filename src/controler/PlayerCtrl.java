@@ -46,12 +46,43 @@ public class PlayerCtrl {
 			try {
 				System.out.println("Saisissez le pseudo du joueur n�" + i +  ": \n");
 				nameOfPlayer = scan.next();
-				Player player = new Player(nameOfPlayer);
+				Player player = new Player(nameOfPlayer, false);
 				this.listOfPlayers.add(player);
 			} catch(Exception e) {
 				System.out.println("ATTENTION, saisissez bien le prenom du joueur !");
 				scan.nextLine();
 			}
+		}
+	}
+	
+	/**
+	 * Menu pour choisir de jouer ou non avec une IA
+	 * @return
+	 */
+	public int choiceIA() {
+		int playingWithIA = 0;
+		Scanner scan = new Scanner(System.in);
+		do {
+			try {
+				System.out.println("Souhaitez-vous jouer contre une IA ? \n 0 - OUI \n 1 - NON \n");
+				playingWithIA = scan.nextInt();
+			} catch(Exception e) {
+				System.out.println("ATTENTION, seulement les réponses 0 ou 1 sont autorisés");
+				scan.nextLine();
+			}
+		} while (false  || playingWithIA !=0 && playingWithIA !=1);
+		return playingWithIA;
+	}
+	
+	/**
+	 * Création de l'IA en fonction de la réponse de la fonction d'au dessus
+	 * @param playingWithIA
+	 */
+	public void createIA(int playingWithIA) {
+		if(playingWithIA == 0) {
+			Player ia = new Player("Rebecca IA", true);
+			System.out.println("Ajout de l'IA: " + ia.getName() + "\n");
+			this.listOfPlayers.add(ia);
 		}
 	}
 
@@ -114,13 +145,20 @@ public class PlayerCtrl {
 					gameboardCtrl.removeSelectDomino(numberOfDominoSelect);
 				}
 			} else {
-				
-				try {
-					System.out.println("Veuillez selectionner le numero domino que vous souhaitez : \n");
-					numberOfDominoSelect = scan.nextInt();
-				} catch(Exception e) {
-					System.out.println("ATTENTION, selectionnez le numero du domino \n");
+				if(player.isIa) {
+					Random rand = new Random();
+					int value = rand.nextInt(gameboardCtrl.listOfDominoPull.size());
+					numberOfDominoSelect = gameboardCtrl.listOfDominoPull.get(value).getNumeroDomino();
+				} else {
+					try {
+						System.out.println("Veuillez selectionner le numero domino que vous souhaitez : \n");
+						numberOfDominoSelect = scan.nextInt();
+					} catch(Exception e) {
+						System.out.println("ATTENTION, selectionnez le numero du domino \n");
+					}
 				}
+				
+				
 				player.addDomino(gameboardCtrl.listOfDominoPull, numberOfDominoSelect);
 				gameboardCtrl.removeSelectDomino(numberOfDominoSelect);
 
@@ -139,7 +177,6 @@ public class PlayerCtrl {
 		while(initialDominoPull.hasNext()) {
 			placeOfPlayer +=1;
 			Domino dominoPull = initialDominoPull.next();
-			System.out.println("Le numero de la liste est : " + dominoPull.getNumeroDomino());
 			
 			Iterator<Player> players = oldListOfPlayers.iterator();
 			while(players.hasNext()) {

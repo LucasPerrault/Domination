@@ -1,20 +1,5 @@
 package controler;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
-
-import model.Castle;
-import model.Domino;
-import model.Gameboard;
-import model.King;
-import model.Player;
-import vue.Window;
-import java.util.Map;
-import java.util.HashMap;
 
 public class Game {
 	
@@ -45,6 +30,7 @@ public class Game {
 					
 					playerCtrl.setNumberOfPlayers();
 					playerCtrl.setPlayers();
+					playerCtrl.createIA(playerCtrl.choiceIA());
 					playerCtrl.setGameboardOfPlayer();
 					
 					castleCtrl.setCastle(playerCtrl.listOfPlayers);
