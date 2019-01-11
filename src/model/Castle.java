@@ -29,15 +29,15 @@ public class Castle {
 	/**
 	 * Retourne la position en X du chateau
 	 */
-	public int positionX() {
+	public int getPositionX() {
 		return this.positionX;
 	}
 	
 	/**
 	 * Retourne la position en Y du chateau
 	 */
-	public int positionY() {
-		return this.positionY();
+	public int getPositionY() {
+		return this.positionY;
 	}
 
 }

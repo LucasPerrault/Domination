@@ -27,13 +27,13 @@ public class PlayerCtrl {
 		Scanner scan = new Scanner(System.in);
 		do {
 			try {
-				System.out.println("Saisissez le nombre de joueur: 2/3/4 \n");
+				System.out.println("Saisissez le nombre de joueur: 1/2/3/4 \n (Si vous souhaitez jouer seul, une IA sera automatiquement proposée \n");
 				this.numberOfPlayers = scan.nextInt();
 			} catch(Exception e) {
-				System.out.println("ATTENTION, seulement 2, 3 ou 4 joueurs sont autorisés à jouer");
+				System.out.println("ATTENTION, seulement 1, 2, 3 ou 4 joueurs sont autorisés à jouer");
 				scan.nextLine();
 			}
-		} while (false  || this.numberOfPlayers !=2 && this.numberOfPlayers !=3 && this.numberOfPlayers !=4);
+		} while (false  || this.numberOfPlayers !=1 && this.numberOfPlayers !=2 && this.numberOfPlayers !=3 && this.numberOfPlayers !=4);
 	}
 	
 	/*
@@ -60,17 +60,22 @@ public class PlayerCtrl {
 	 * @return
 	 */
 	public int choiceIA() {
-		int playingWithIA = 0;
-		Scanner scan = new Scanner(System.in);
-		do {
-			try {
-				System.out.println("Souhaitez-vous jouer contre une IA ? \n 0 - OUI \n 1 - NON \n");
-				playingWithIA = scan.nextInt();
-			} catch(Exception e) {
-				System.out.println("ATTENTION, seulement les réponses 0 ou 1 sont autorisés");
-				scan.nextLine();
-			}
-		} while (false  || playingWithIA !=0 && playingWithIA !=1);
+		int playingWithIA = 1;
+		if(this.numberOfPlayers == 1) {
+			// S'il n'y qu'un joueur, alors une IA est automatiquement ajoutées
+			playingWithIA = 0;
+		} else {
+			Scanner scan = new Scanner(System.in);
+			do {
+				try {
+					System.out.println("Souhaitez-vous jouer contre une IA ? \n 0 - OUI \n 1 - NON \n");
+					playingWithIA = scan.nextInt();
+				} catch(Exception e) {
+					System.out.println("ATTENTION, seulement les réponses 0 ou 1 sont autorisés");
+					scan.nextLine();
+				}
+			} while (false  || playingWithIA !=0 && playingWithIA !=1);
+		}
 		return playingWithIA;
 	}
 	
@@ -122,6 +127,7 @@ public class PlayerCtrl {
 		
 		Iterator<Player> iterator = this.listOfPlayers.iterator();
 		Scanner scan = new Scanner(System.in);
+		Random rand = new Random();
 		int numberOfDominoSelect = 0;
 
 		while(iterator.hasNext()) {
@@ -131,22 +137,27 @@ public class PlayerCtrl {
 			
 			// Si il y a deux joueurs, ils doivent choisir deux dominos
 			if(listOfPlayers.size() == 2) {
-				
-				for(int i=0; i<listOfPlayers.size(); i++) {
-										
-					try {
-						System.out.println("Veuillez selectionner le numero du domino que vous souhaitez : \n");
-						numberOfDominoSelect = scan.nextInt();
-					} catch(Exception e) {
-						System.out.println("ATTENTION, selectionnez le numero du domino \n");
+				if(player.isIa) {
+					for(int i=0; i<listOfPlayers.size(); i++) {
+						int value = rand.nextInt(gameboardCtrl.listOfDominoPull.size());
+						numberOfDominoSelect = gameboardCtrl.listOfDominoPull.get(value).getNumeroDomino();
+						player.addDomino(gameboardCtrl.listOfDominoPull, numberOfDominoSelect);
+						gameboardCtrl.removeSelectDomino(numberOfDominoSelect);
 					}
-
-					player.addDomino(gameboardCtrl.listOfDominoPull, numberOfDominoSelect);
-					gameboardCtrl.removeSelectDomino(numberOfDominoSelect);
+				} else {
+					for(int i=0; i<listOfPlayers.size(); i++) {						
+						try {
+							System.out.println("Veuillez selectionner le numero du domino que vous souhaitez : \n");
+							numberOfDominoSelect = scan.nextInt();
+						} catch(Exception e) {
+							System.out.println("ATTENTION, selectionnez le numero du domino \n");
+						}
+						player.addDomino(gameboardCtrl.listOfDominoPull, numberOfDominoSelect);
+						gameboardCtrl.removeSelectDomino(numberOfDominoSelect);
+					}
 				}
 			} else {
 				if(player.isIa) {
-					Random rand = new Random();
 					int value = rand.nextInt(gameboardCtrl.listOfDominoPull.size());
 					numberOfDominoSelect = gameboardCtrl.listOfDominoPull.get(value).getNumeroDomino();
 				} else {
@@ -157,11 +168,8 @@ public class PlayerCtrl {
 						System.out.println("ATTENTION, selectionnez le numero du domino \n");
 					}
 				}
-				
-				
 				player.addDomino(gameboardCtrl.listOfDominoPull, numberOfDominoSelect);
 				gameboardCtrl.removeSelectDomino(numberOfDominoSelect);
-
 			}
 		}
 		

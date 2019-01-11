@@ -31,7 +31,7 @@ public class GameboardCtrl {
 	 */
 	public void firstTurnOfPlay(PlayerCtrl playerCtrl, DeckCtrl deckCtrl) {
 		this.turn += 1;
-		System.out.println("Tour n°: " + this.turn + "\n");
+		System.out.println("\n\n*******************Tour n°: " + this.turn + "****************\n");
 		
 		if(playerCtrl.numberOfPlayers == 3) {
 			this.listOfDominoPull = deckCtrl.distributeDomino(3);
@@ -55,7 +55,7 @@ public class GameboardCtrl {
 	 */
 	public void turnOfPlayer(PlayerCtrl playerCtrl, DeckCtrl deckCtrl) {
 		this.turn += 1;
-		System.out.println("Tour n°: " + this.turn + "\n");
+		System.out.println("******************Tour n°: " + this.turn + "******************\n");
 		
 		if(playerCtrl.numberOfPlayers == 3) {
 			this.listOfDominoPull = deckCtrl.distributeDomino(3);
@@ -86,7 +86,7 @@ public class GameboardCtrl {
 		Iterator<Domino> iterator = this.listOfDominoPull.iterator();
 		while(iterator.hasNext()) {
 			Domino domino = iterator.next();
-			System.out.println("Les dominos disponibles sont : " + domino.getNumeroDomino() + "\n" );
+			System.out.println("Les dominos disponibles sont : " + domino.getNumeroDomino());
 		}
 		
 	}

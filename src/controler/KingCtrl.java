@@ -53,33 +53,17 @@ public class KingCtrl {
 	 * @return
 	 */
 	public String selectColor(Player player) {
-		if(player.isIa) {
-			Random rand = new Random();
-			switch (rand.nextInt(3)+1) {
-			case 1:
-				return "Rouge";
-			case 2:
-				return "Bleu";
-			case 3:
-				return "Vert";
-			case 4:
-				return "Jaune";
-			default:
-				return "Erreur veuillez reessayer..";
-			}
-		} else {
-			switch (this.displayPossibilityColor(player)) {
-			case 1:
-				return "Rouge";
-			case 2:
-				return "Bleu";
-			case 3:
-				return "Vert";
-			case 4:
-				return "Jaune";
-			default:
-				return "Erreur veuillez reessayer..";
-			}
+		switch (this.displayPossibilityColor(player)) {
+		case 1:
+			return "Rouge";
+		case 2:
+			return "Bleu";
+		case 3:
+			return "Vert";
+		case 4:
+			return "Jaune";
+		default:
+			return "Erreur veuillez reessayer..";
 		}
 	}
 	
@@ -90,19 +74,23 @@ public class KingCtrl {
 	 */
 	public int displayPossibilityColor(Player player) {
 		int response = 0;
-		Scanner scan = new Scanner(System.in);
-		// Le joueur choisit une couleur impos�e
-		System.out.println("INSTRUCTION:  Choisissez la couleur du roi désiré avec \nle chiffre correspondant: \n");
-		do {
-			try {
-				System.out.println("1. Rouge \n" + "2. Bleu \n" + "3. Vert \n" + "4. Jaune \n");
-				response = scan.nextInt();
-			} catch(Exception e) {
-				System.out.println("ATTENTION, selectionnez le 1, 2, 3 ou 4");
-			}
-			
-		} while (false || response != 1 && response !=2 && response != 3 && response != 4 );
-		
+		if(player.isIa) {
+			Random rand = new Random();
+			response = (rand.nextInt(4)+1);
+		} else {
+			Scanner scan = new Scanner(System.in);
+			// Le joueur choisit une couleur impos�e
+			System.out.println("INSTRUCTION:  Choisissez la couleur du roi désiré avec \nle chiffre correspondant: \n");
+			do {
+				try {
+					System.out.println("1. Rouge \n" + "2. Bleu \n" + "3. Vert \n" + "4. Jaune \n");
+					response = scan.nextInt();
+				} catch(Exception e) {
+					System.out.println("ATTENTION, selectionnez le 1, 2, 3 ou 4");
+				}
+				
+			} while (false || response != 1 && response !=2 && response != 3 && response != 4 );
+		}
 		return response;
 	}
 	
