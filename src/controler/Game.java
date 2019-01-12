@@ -129,7 +129,39 @@ public class Game {
 		    return false;
 		}
 		
-		if (Collections.max(listX)-Collections.min(listX)<=4 && Collections.max(listY)-Collections.min(listY)<=4) {
+		int nbDeCaseAdroite = 0;
+		for (int i = 0; i < 5; i++) {
+			if (plateau.containsKey((cordxg + i) + "." + cordyg)) {
+				nbDeCaseAdroite++;
+			}
+		}
+
+		int nbDeCaseAgauche = 0;
+		for (int i = 0; i < 5; i++) {
+			if (plateau.containsKey((cordxg - i) + "." + cordyg)) {
+				nbDeCaseAgauche++;
+			}
+		}
+
+		int nbDeCaseEnHaut = 0;
+		for (int i = 0; i < 5; i++) {
+			if (plateau.containsKey(cordxg + "." + (cordyg + i))) {
+				nbDeCaseEnHaut++;
+			}
+		}
+
+		int nbDeCaseEnBas = 0;
+		for (int i = 0; i < 5; i++) {
+			if (plateau.containsKey(cordxg + "." + (cordyg - i))) {
+				nbDeCaseEnBas++;
+			}
+		}
+		
+		if (nbDeCaseAdroite > 4 || nbDeCaseAgauche > 4 || nbDeCaseEnHaut > 4 || nbDeCaseEnBas > 4) {
+			System.out.println("Impossible de placer la case sinon on dépasse 5x5");
+			return false;
+		}
+		else {
 			for (int i = 0; i < listCases.size(); i++) {
 				if (plateau.get(listCases.get(i)).isCastle()) {
 					System.out.println("La case est un chateau");
