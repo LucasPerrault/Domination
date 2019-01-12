@@ -54,44 +54,52 @@ public class Game {
 				System.out.println(plateau);
 				boolean gagner = false;
 				do {
-					ArrayList<Integer> listX= new ArrayList<Integer>();
-					ArrayList<Integer> listY = new ArrayList<Integer>();
-					listX.add(4);
-					listY.add(4);
-					
+				
 					Scanner scan = new Scanner(System.in);
 					String cordxyg;
-					String cordxyGauche = "";
-					String cordxyDroite = "";
-					String cordxyHaut = "";
-					String cordxyBas = "";
+					String cordxygGauche = "";
+					String cordxygDroite = "";
+					String cordxygHaut = "";
+					String cordxygBas = "";
 					Case cases1;
 					Case cases2;
 
 					System.out.println("Cord X pour la tuile gauche");
 					int cordxg = scan.nextInt();
-					listX.add(cordxg);
+
 					System.out.println("Cord Y pour la tuile gauche");
 					int cordyg = scan.nextInt();
-					listY.add(cordyg);
+
 					cordxyg = (cordxg + "." + cordyg);
-					cordxyGauche = (cordxg - 1 + "." + cordyg);
-					cordxyDroite = (cordxg + 1 + "." + cordyg);
-					cordxyHaut = (cordxg + "." + cordyg + 1);
-					cordxyBas = (cordxg + "." + cordyg--);
+					cordxygGauche = (cordxg - 1 + "." + cordyg);
+					cordxygDroite = (cordxg + 1 + "." + cordyg);
+					cordxygHaut = (cordxg + "." + cordyg + 1);
+					cordxygBas = (cordxg + "." + cordyg--);
 					cases1 = new Case(listeDomino.get(1).getTuileLeft());
-					if (checkCase1(listeDomino, plateau, cordxyGauche, cordxyDroite, cordxyHaut, cordxyBas)) {
-						plateau.put(cordxyg, cases1);
-					}
+					
 
 					System.out.println("Cord X pour la tuile droite");
 					int cordxd = scan.nextInt();
-					listX.add(cordxd);
+
 					System.out.println("Cord Y pour la tuile droite");
 					int cordyd = scan.nextInt();
+					
 					String cordxyd = (cordxd + "." + cordyd);
+					String cordxydGauche = "";
+					String cordxydDroite = "";
+					String cordxydHaut = "";
+					String cordxydBas = "";
+					
+					cordxyd = (cordxd + "." + cordyd);
+					cordxydGauche = (cordxd - 1 + "." + cordyd);
+					cordxydDroite = (cordxd + 1 + "." + cordyd);
+					cordxydHaut = (cordxd + "." + cordyd + 1);
+					cordxydBas = (cordxd + "." + cordyd--);
 					cases2 = new Case(listeDomino.get(1).getTuileRight());
-					if (checkCase2(listeDomino, plateau, cordxyGauche, cordxyDroite, cordxyHaut, cordxyBas)) {
+					
+					
+					if (checkCase2(listeDomino, plateau,cordxg, cordyg, cordxd, cordyd, cordxydGauche, cordxydDroite, cordxydHaut, cordxydBas) || (checkCase1(listeDomino, plateau, cordxg, cordyg, cordxygGauche, cordxygDroite, cordxygHaut, cordxygBas))) {
+						plateau.put(cordxyg, cases1);
 						plateau.put(cordxyd, cases2);
 					}
 				
@@ -108,7 +116,7 @@ public class Game {
 
 	
 	
-	public boolean checkCase1(ArrayList<Domino> listeDomino, Map<String, Case> plateau, String cordxyGauche,
+	public boolean checkCase1(ArrayList<Domino> listeDomino, Map<String, Case> plateau, int cordxg, int cordyg, String cordxyGauche,
 			String cordxyDroite, String cordxyHaut, String cordxyBas) {
 		ArrayList<String> listCases = new ArrayList<String>();
 
@@ -183,20 +191,67 @@ public class Game {
 
 	
 	
-	public boolean checkCase2(ArrayList<Domino> listeDomino, Map<String, Case> plateau, String cordxyGauche,
+	public boolean checkCase2(ArrayList<Domino> listeDomino, Map<String, Case> plateau,int cordxg, int cordyg,int cordxd, int cordyd, String cordxyGauche,
 			String cordxyDroite, String cordxyHaut, String cordxyBas) {
 		ArrayList<String> listCases = new ArrayList<String>();
 		
-		if (Collections.max(listX)-Collections.min(listX)<=4 && Collections.max(listY)-Collections.min(listY)<=4) {
-			for (int i=0, i<listX.size(), i++);
-				if (cordxyd!=(listX.get(i) + '.' +listY.get(i)) ) {
-					if ((cordxd,cordyd)==(cordxd+1,cordyd) || (cordxd,cordyd)==((cordxd-1,cordyd) || (cordxd,cordyd)==((cordxd,cordyd+1) {|| (cordxd,cordyd)==(cordxd,cordyd-1)) {
-						return true;
-				}
+
+		if (plateau.containsKey(cordxyGauche)) {
+			listCases.add(cordxyGauche);
+		}
+		if (plateau.containsKey(cordxyDroite)) {
+			listCases.add(cordxyDroite);
+		}
+		if (plateau.containsKey(cordxyHaut)) {
+			listCases.add(cordxyHaut);
+		}
+		if (plateau.containsKey(cordxyBas)) {
+			listCases.add(cordxyBas);
+		}
+
+		if (listCases.isEmpty()) {
+			return false;
+		}
+
+		int nbDeCaseAdroite = 0;
+		for (int i = 0; i < 5; i++) {
+			if (plateau.containsKey((cordxd + i) + "." + cordyd)) {
+				nbDeCaseAdroite++;
+			}
+		}
+
+		int nbDeCaseAgauche = 0;
+		for (int i = 0; i < 5; i++) {
+			if (plateau.containsKey((cordxd - i) + "." + cordyd)) {
+				nbDeCaseAgauche++;
+			}
+		}
+
+		int nbDeCaseEnHaut = 0;
+		for (int i = 0; i < 5; i++) {
+			if (plateau.containsKey(cordxd + "." + (cordyd + i))) {
+				nbDeCaseEnHaut++;
+			}
+		}
+
+		int nbDeCaseEnBas = 0;
+		for (int i = 0; i < 5; i++) {
+			if (plateau.containsKey(cordxd + "." + (cordyd - i))) {
+				nbDeCaseEnBas++;
 			}
 		}
 		
-		
+		if (nbDeCaseAdroite > 4 || nbDeCaseAgauche > 4 || nbDeCaseEnHaut > 4 || nbDeCaseEnBas > 4) {
+			System.out.println("Impossible de placer la case sinon on dépasse 5x5");
+			return false;
+		}	
+		else {
+			for (int i = 0; i < listCases.size(); i++) {
+				if (listCases.get(i).equalsIgnoreCase(cordxg + "." + cordyg)) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}	
 	
