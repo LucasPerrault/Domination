@@ -28,7 +28,7 @@ public class Case {
 
 	@Override
 	public String toString() {
-		return "Case [tuile=" + tuile + ", castle=" + castle + "]";
+		return "" + tuile;
 	}
 
 }

@@ -16,7 +16,7 @@ public class Tuile {
 	
 	@Override
 	public String toString() {
-		return " une tuile de type " + this.type + " et contient " + this.nbCouronne + " couronne(s)\n";
+		return "T" + this.type + "&C" + this.nbCouronne + "\t";
 	}
 	
 	/*

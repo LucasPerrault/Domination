@@ -38,13 +38,13 @@ public class Player {
 	 * Retourne le(s) chateau(x) du joueur
 	 */
 	public String getCastles() {
-		String castleI = "Les chateaux sont ";
+		String color = "";
 		Iterator<Castle> castles = listCastle.iterator();
 		while(castles.hasNext()) {
-			Castle castle = castles.next();
-			castleI.concat(castle.toString());
+			Castle castle = castles.next(); 
+			color = castle.color;
 		}
-		return castleI;
+		return "Cht" + color + "\t";
 	}
 	
 	/*
