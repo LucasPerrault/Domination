@@ -51,26 +51,6 @@ public class Game {
 		} while (value != 1);
 		System.out.println("Vous avez decider de quittez l'application !");
 	}
-
-	
-	/**
-	 * Quand on pose la tuile, il verifie si la tuile est a coter d'un chateau
-	 * @param listeDomino
-	 * @param plateau
-	 * @param cordxg
-	 * @param cordyg
-	 * @param cordxyGauche
-	 * @param cordxyDroite
-	 * @param cordxyHaut
-	 * @param cordxyBas
-	 * @return
-	 */
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Affichage du menu de selection d'action

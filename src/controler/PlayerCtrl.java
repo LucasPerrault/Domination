@@ -147,8 +147,6 @@ public class PlayerCtrl {
 						numberOfDominoSelect = gameboardCtrl.listOfDominoPull.get(value).getNumeroDomino();
 						player.addDomino(gameboardCtrl.listOfDominoPull, numberOfDominoSelect);
 						gameboardCtrl.removeSelectDomino(numberOfDominoSelect);
-						this.putDomino(player, gameboardCtrl);
-
 					}
 				} else {
 					for(int i=0; i<listOfPlayers.size(); i++) {						
@@ -159,8 +157,9 @@ public class PlayerCtrl {
 							System.out.println("ATTENTION, selectionnez le numero du domino \n");
 						}
 						player.addDomino(gameboardCtrl.listOfDominoPull, numberOfDominoSelect);
+						this.putDomino(player, gameboardCtrl, this.returnDomino(gameboardCtrl.listOfDominoPull, numberOfDominoSelect));
 						gameboardCtrl.removeSelectDomino(numberOfDominoSelect);
-						this.putDomino(player, gameboardCtrl);
+
 					}
 				}
 			} else {
@@ -176,6 +175,7 @@ public class PlayerCtrl {
 					}
 				}
 				player.addDomino(gameboardCtrl.listOfDominoPull, numberOfDominoSelect);
+				this.putDomino(player, gameboardCtrl, this.returnDomino(gameboardCtrl.listOfDominoPull, numberOfDominoSelect));
 				gameboardCtrl.removeSelectDomino(numberOfDominoSelect);
 			}
 		}
@@ -184,6 +184,10 @@ public class PlayerCtrl {
 		
 	}
 	
+	/**
+	 * Ordonne une liste de joueur en fonction des dominos choisis avant
+	 * @param initialListOfDominoPull
+	 */
 	public void orderPlayer(ArrayList<Domino> initialListOfDominoPull) {
 		ArrayList<Player> oldListOfPlayers = new ArrayList<Player>(this.listOfPlayers);
 		Iterator<Domino> initialDominoPull = initialListOfDominoPull.iterator();
@@ -212,86 +216,159 @@ public class PlayerCtrl {
 		}
 	}
 	
-	public void putDomino(Player player, GameboardCtrl gameboardCtrl) {
-			
-		System.out.println("Placer ce domino sur votre plateau : \n");
-		gameboardCtrl.displayGameboard(player.gameboard.plat);
-	
-		// Demande à l'utilisateur
-		Scanner scan = new Scanner(System.in);
-		String cordxyg;
-		String cordxygGauche = "";
-		String cordxygDroite = "";
-		String cordxygHaut = "";
-		String cordxygBas = "";
-		int cordxg = 0;
-		int cordyg =0;
-		int cordxd = 0;
-		int cordyd = 0;
-		Case cases1;
-		Case cases2;
-
-		System.out.println("Cord X pour la tuile gauche");
-		cordxg = scan.nextInt();
-
-		System.out.println("Cord Y pour la tuile gauche");
-		cordyg = scan.nextInt();
-
-		cordxyg = (cordxg + "." + cordyg);
-		cordxygGauche = (cordxg - 1 + "." + cordyg);
-		cordxygDroite = (cordxg + 1 + "." + cordyg);
-		cordxygHaut = (cordxg + "." + cordyg + 1);
-		cordxygBas = (cordxg + "." + cordyg--);
-		cases1 = new Case(player.listDominos.get(0).getTuileLeft());
-		
-
-		System.out.println("Cord X pour la tuile droite");
-		cordxd = scan.nextInt();
-
-		System.out.println("Cord Y pour la tuile droite");
-		cordyd = scan.nextInt();
-		
-		String cordxyd = (cordxd + "." + cordyd);
-		String cordxydGauche = "";
-		String cordxydDroite = "";
-		String cordxydHaut = "";
-		String cordxydBas = "";
-		
-		cordxyd = (cordxd + "." + cordyd);
-		cordxydGauche = (cordxd - 1 + "." + cordyd);
-		cordxydDroite = (cordxd + 1 + "." + cordyd);
-		cordxydHaut = (cordxd + "." + cordyd + 1);
-		cordxydBas = (cordxd + "." + cordyd--);
-		cases2 = new Case(player.listDominos.get(0).getTuileRight());
-		
-		
-		if (checkCase2(player.listDominos, player.gameboard.plateau,cordxg, cordyg, cordxd, cordyd, cordxydGauche, cordxydDroite, cordxydHaut, cordxydBas) || (checkCase1(player.listDominos, player.gameboard.plateau, cordxg, cordyg, cordxygGauche, cordxygDroite, cordxygHaut, cordxygBas))) {
-			player.gameboard.plateau.put(cordxyg, cases1);
-			player.gameboard.plat[cordyg+1][cordxg] = cases1.toString();
-			player.gameboard.plateau.put(cordxyd, cases2);
-			player.gameboard.plat[cordyd+1][cordxd] = cases2.toString();
+	/**
+	 * Retourne un objet domino en fonction d'un numero int
+	 * @param listOfDominoPull
+	 * @param numberOfDomino
+	 * @return
+	 */
+	public Domino returnDomino(ArrayList<Domino> listOfDominoPull, int numberOfDomino) {
+		Domino domino = null;
+		Iterator<Domino> iterator = listOfDominoPull.iterator();
+		while (iterator.hasNext()) {
+			domino = iterator.next(); // On récupère l'élément courant
+			if(numberOfDomino == domino.getNumeroDomino()) {
+				return domino;
+			}
 		}
-	
-
-		System.out.println(player.gameboard.plateau);			
+		return domino;
 	}
 	
+	/**
+	 * Permet de placer un domino sur un plateau
+	 * @param player
+	 * @param gameboardCtrl
+	 * @param domino
+	 */
+	public void putDomino(Player player, GameboardCtrl gameboardCtrl, Domino domino) {
+		int cordxg = 0;
+		int cordyg = 0;
+		int cordxd = 0;
+		int cordyd = 0;
+		Case cases2;
+		Case cases1;
+		System.out.println("Placer ce domino sur votre plateau : \n");
+		gameboardCtrl.displayGameboard(player.gameboard.plat);
+		
+		do {
+			cordxg = this.getPositionPositionXLeftTuile();
+			cordyg = this.getPositionPositionYLeftTuile();
+			cordxd = this.getPositionPositionXRightTuile();
+			cordyd = this.getPositionPositionYRightTuile();
+			
+			cases1 = new Case(domino.getTuileLeft());
+			cases2 = new Case(domino.getTuileRight());
+		} while((
+			!checkCase1(player.listDominos, player.gameboard.plateau, cordxg, cordyg) && 
+			!checkCase2(player.listDominos, player.gameboard.plateau, cordxg, cordyg, cordxd, cordyd)
+		));
+		// Initialisation des positions
+		
+		player.gameboard.plateau.put(cordxg + "." + cordyg, cases1);
+		player.gameboard.plateau.put(cordxd + "." + cordyd, cases2);
+		player.gameboard.plat[cordyg][cordxg] = cases1.toString();
+		player.gameboard.plat[cordyd][cordxd] = cases2.toString();
+	}
 	
-	public boolean checkCase1(ArrayList<Domino> listeDomino, Map<String, Case> plateau, int cordxg, int cordyg, String cordxyGauche,
-			String cordxyDroite, String cordxyHaut, String cordxyBas) {
+	/**
+	 * Permet de sélectionner la position x pour la tuile gauche
+	 * @return
+	 */
+	public int getPositionPositionXLeftTuile() {
+		int cordxg = 0; // Tuile de gauche*
+		Scanner scan = new Scanner(System.in);
+		do {
+			try {
+				System.out.println("Selectionner une cordonnée X pour la tuile gauche : ");
+				cordxg = scan.nextInt();
+			} catch (Exception e) {
+				System.out.println("ATTENTION, une position !");
+			}
+		} while(false);
+		return cordxg;
+	}
+	
+	/**
+	 * Permet de sélectionner la position y pour la tuile gauche
+	 * @return
+	 */
+	public int getPositionPositionYLeftTuile() {
+		int cordyg = 0; // Tuile de gauche*
+		Scanner scan = new Scanner(System.in);
+		do {
+			try {
+				System.out.println("Selectionner une cordonnée Y pour la tuile gauche : ");
+				cordyg = scan.nextInt();
+			} catch (Exception e) {
+				System.out.println("ATTENTION, une position !");
+			}
+		} while(false);
+		return cordyg;
+	}
+	
+	/**
+	 * Permet de sélectionner la position x pour la tuile droite
+	 * @return
+	 */
+	public int getPositionPositionXRightTuile() {
+		int cordxd = 0; // Tuile de gauche*
+		Scanner scan = new Scanner(System.in);
+		do {
+			try {
+				System.out.println("Selectionner une cordonnée X pour la tuile droite : ");
+				cordxd = scan.nextInt();
+			} catch (Exception e) {
+				System.out.println("ATTENTION, une position !");
+			}
+		} while(false);
+		return cordxd;
+	}
+	
+	/**
+	 * Permet de sélectionner la position y pour la tuile droite
+	 * @return
+	 */
+	public int getPositionPositionYRightTuile() {
+		int cordyd = 0; // Tuile de gauche*
+		Scanner scan = new Scanner(System.in);
+		do {
+			try {
+				System.out.println("Selectionner une cordonnée Y pour la tuile droite : ");
+				cordyd = scan.nextInt();
+			} catch (Exception e) {
+				System.out.println("ATTENTION, une position !");
+			}
+		} while(false);
+		return cordyd;
+	}
+	
+	/**
+	 * Permet de déterminer si les cases à coter de la notre sont bonnes ou non
+	 * @param listeDomino
+	 * @param plateau
+	 * @param cordxg
+	 * @param cordyg
+	 * @return
+	 */
+	public boolean checkCase1(ArrayList<Domino> listeDomino, Map<String, Case> plateau, int cordxg, int cordyg) {
 		ArrayList<String> listCases = new ArrayList<String>();
+		String cordxyg = (cordxg + "." + cordyg);
+		String cordxygGauche = (cordxg - 1 + "." + cordyg);
+		String cordxygDroite = (cordxg + 1 + "." + cordyg);
+		String cordxygHaut = (cordxg + "." + cordyg + 1);
+		String cordxygBas = (cordxg + "." + cordyg--);
 
-		if (plateau.containsKey(cordxyGauche)){
-			listCases.add(cordxyGauche);
+		if (plateau.containsKey(cordxygGauche)){
+			listCases.add(cordxygGauche);
 			}
-		if (plateau.containsKey(cordxyDroite)){
-			listCases.add(cordxyDroite);
+		if (plateau.containsKey(cordxygDroite)){
+			listCases.add(cordxygDroite);
 		}
-		if (plateau.containsKey(cordxyHaut)){
-			listCases.add(cordxyHaut);
+		if (plateau.containsKey(cordxygHaut)){
+			listCases.add(cordxygHaut);
 			}
-		if (plateau.containsKey(cordxyBas)){
-			listCases.add(cordxyBas);
+		if (plateau.containsKey(cordxygBas)){
+			listCases.add(cordxygBas);
 		}
 		
 		if (listCases.isEmpty()) {
@@ -342,32 +419,39 @@ public class PlayerCtrl {
 				}
 			}
 		}
-		
-		
 		return false;
 	}
 	
-	
-	
-
-	
-	
-	public boolean checkCase2(ArrayList<Domino> listeDomino, Map<String, Case> plateau,int cordxg, int cordyg,int cordxd, int cordyd, String cordxyGauche,
-			String cordxyDroite, String cordxyHaut, String cordxyBas) {
+	/**
+	 * Permet de déterminer si les cases à coter de la notre sont bonnes ou non
+	 * @param listeDomino
+	 * @param plateau
+	 * @param cordxg
+	 * @param cordyg
+	 * @param cordxd
+	 * @param cordyd
+	 * @return
+	 */
+	public boolean checkCase2(ArrayList<Domino> listeDomino, Map<String, Case> plateau,int cordxg, int cordyg,int cordxd, int cordyd) {
 		ArrayList<String> listCases = new ArrayList<String>();
+		String cordxyd = (cordxd + "." + cordyd);
+		String cordxydGauche = (cordxd - 1 + "." + cordyd);
+		String cordxydDroite = (cordxd + 1 + "." + cordyd);
+		String cordxydHaut = (cordxd + "." + cordyd + 1);
+		String cordxydBas = (cordxd + "." + cordyd--);
 		
 
-		if (plateau.containsKey(cordxyGauche)) {
-			listCases.add(cordxyGauche);
+		if (plateau.containsKey(cordxydGauche)) {
+			listCases.add(cordxydGauche);
 		}
-		if (plateau.containsKey(cordxyDroite)) {
-			listCases.add(cordxyDroite);
+		if (plateau.containsKey(cordxydDroite)) {
+			listCases.add(cordxydDroite);
 		}
-		if (plateau.containsKey(cordxyHaut)) {
-			listCases.add(cordxyHaut);
+		if (plateau.containsKey(cordxydHaut)) {
+			listCases.add(cordxydHaut);
 		}
-		if (plateau.containsKey(cordxyBas)) {
-			listCases.add(cordxyBas);
+		if (plateau.containsKey(cordxydBas)) {
+			listCases.add(cordxydBas);
 		}
 
 		if (listCases.isEmpty()) {

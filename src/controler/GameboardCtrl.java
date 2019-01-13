@@ -64,7 +64,7 @@ public class GameboardCtrl {
             for(j=0; j<gameboard.length ; j++){
                 System.out.print(gameboard[i][j]);
             }
-            System.out.println("\n");
+            System.out.println("\n\n\n");
         }
         System.out.println("\n");
 	}
@@ -88,9 +88,6 @@ public class GameboardCtrl {
 		
 		playerCtrl.orderPlayer(playerCtrl.selectDomino(this));
 
-//		playerCtrl.putDomino(this);
-			
-		// @Todo: Créer la fonction qui permet de placer un domino sur le plateau
 	}
 	
 	/**
@@ -111,8 +108,6 @@ public class GameboardCtrl {
 		this.sortDomino(this.listOfDominoPull);
 		
 		playerCtrl.orderPlayer(playerCtrl.selectDomino(this));
-		
-//		playerCtrl.putDomino();
 
 	}
 

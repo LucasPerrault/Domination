@@ -31,7 +31,7 @@ public class Gameboard {
 	 public void initPlat() {
         for(int i=0; i<plat.length; i++){
             for(int j=0; j<plat.length ; j++){
-                plat[i][j] = ".\t";
+                plat[i][j] = ".\t\t";
             }
         }
 	 }
