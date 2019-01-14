@@ -64,7 +64,7 @@ public class GameboardCtrl {
             for(j=0; j<gameboard.length ; j++){
                 System.out.print(gameboard[i][j]);
             }
-            System.out.println("\n\n\n");
+            System.out.println("\n\n");
         }
         System.out.println("\n");
 	}

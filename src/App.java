@@ -19,7 +19,6 @@ public class App {
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.init();
-//		Window window = new Window(1000,1000, new Game());
 	}
 
 }

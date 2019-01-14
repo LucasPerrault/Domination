@@ -247,6 +247,7 @@ public class PlayerCtrl {
 		int cordyd = 0;
 		Case cases2;
 		Case cases1;
+		System.out.println("RAPPEL: vous devez placer ce: " + domino.toString() + "\n");
 		System.out.println("Placer ce domino sur votre plateau : \n");
 		gameboardCtrl.displayGameboard(player.gameboard.plat);
 		
@@ -268,6 +269,8 @@ public class PlayerCtrl {
 		player.gameboard.plateau.put(cordxd + "." + cordyd, cases2);
 		player.gameboard.plat[cordyg][cordxg] = cases1.toString();
 		player.gameboard.plat[cordyd][cordxd] = cases2.toString();
+		gameboardCtrl.displayGameboard(player.gameboard.plat);
+
 	}
 	
 	/**
