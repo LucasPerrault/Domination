@@ -44,7 +44,7 @@ public class Player {
 			Castle castle = castles.next(); 
 			color = castle.color;
 		}
-		return "Cht" + color + "\t\t";
+		return "Cht" + color + "\t";
 	}
 	
 	/*
