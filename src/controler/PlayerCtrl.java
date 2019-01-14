@@ -358,8 +358,8 @@ public class PlayerCtrl {
 		String cordxyg = (cordxg + "." + cordyg);
 		String cordxygGauche = (cordxg - 1 + "." + cordyg);
 		String cordxygDroite = (cordxg + 1 + "." + cordyg);
-		String cordxygHaut = (cordxg + "." + cordyg + 1);
-		String cordxygBas = (cordxg + "." + cordyg--);
+		String cordxygHaut = (cordxg + "." + (cordyg + 1));
+		String cordxygBas = (cordxg + "." + (cordyg - 1));
 
 		if (plateau.containsKey(cordxygGauche)){
 			listCases.add(cordxygGauche);
